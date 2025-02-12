@@ -46,4 +46,4 @@ def get_threats_data(page: int = 1, limit: int = 10):
 
     # Extract and return data from JSON
     threats = extract_urlhaus_data(data)
-    return {'threats': paginate_threats_data(threats, page, limit)}
+    return {'threats': paginate_threats_data(threats, page, limit), 'length': len(threats)}
