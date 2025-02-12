@@ -1,10 +1,12 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 from src import get_threats_data
 
 # Setup app
 app = Flask(__name__)
 app.json.sort_keys = False
+CORS(app, origins=['http://localhost:5173'])
 
 
 @app.get('/api/threats')
