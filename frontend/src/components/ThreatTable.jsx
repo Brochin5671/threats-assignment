@@ -29,7 +29,7 @@ export const ThreatTable = ({ threats, loading }) => {
   return (
     <Paper>
       <DataGrid
-        rows={threats.map((threat, i) => ({ ...threat, id: i }))}
+        rows={threats?.map((threat, i) => ({ ...threat, id: i }))}
         columns={columns}
         initialState={{
           pagination: { paginationModel: { page: 0, pageSize: 10 } },
