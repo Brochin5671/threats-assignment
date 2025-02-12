@@ -2,7 +2,7 @@ import requests
 from .models import Threat
 
 
-def get_urlhaus_data(limit: int | None):
+def get_urlhaus_data(limit: int | None = None):
     url = 'https://urlhaus-api.abuse.ch/v1/urls/recent/'
     # Get threats using a limit if provided
     if limit:
@@ -19,7 +19,7 @@ def get_urlhaus_data(limit: int | None):
     return data
 
 
-def extract_urlhaus_data(data):
+def extract_urlhaus_data(data) -> list[Threat]:
     # Extract just the host, url, threat type, and date added attributes from each object in JSON
     threats = []
     for item in data['urls']:
@@ -32,12 +32,18 @@ def extract_urlhaus_data(data):
     return threats
 
 
-def get_threats_data(limit: int | None = None):
+def paginate_threats_data(threats: list, page: int, limit: int) -> list[Threat]:
+    start = (page - 1) * limit
+    end = start + limit
+    return threats[start:end]
+
+
+def get_threats_data(page: int = 1, limit: int = 10):
     # Get data from API
-    data = get_urlhaus_data(limit)
+    data = get_urlhaus_data()
     if data.get('error'):
         return data
 
     # Extract and return data from JSON
     threats = extract_urlhaus_data(data)
-    return {'threats': threats}
+    return {'threats': paginate_threats_data(threats, page, limit)}
