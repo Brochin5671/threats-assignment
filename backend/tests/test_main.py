@@ -1,5 +1,6 @@
 from main import app
 import pytest
+import time
 
 
 @pytest.fixture
@@ -17,6 +18,7 @@ def test_threats(client):
     assert res.status_code == 200
     data = res.json
     assert len(data.get('threats')) == limit
+    time.sleep(1)
 
 
 def test_threats_default(client):
@@ -25,6 +27,7 @@ def test_threats_default(client):
     assert res.status_code == 200
     data = res.json
     assert len(data.get('threats')) == 10
+    time.sleep(1)
 
 
 def test_threats_missing_limit(client):
@@ -34,6 +37,7 @@ def test_threats_missing_limit(client):
     assert res.status_code == 400
     data = res.json
     assert data.get('error') is not None
+    time.sleep(1)
 
 
 def test_threats_missing_page(client):
@@ -43,3 +47,4 @@ def test_threats_missing_page(client):
     assert res.status_code == 400
     data = res.json
     assert data.get('error') is not None
+    time.sleep(1)
