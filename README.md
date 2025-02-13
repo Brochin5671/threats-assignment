@@ -44,6 +44,7 @@ Run the backend API in a seperate terminal:
 
 ```bash
 cd backend
+source env/bin/activate
 python3 main.py
 ```
 
@@ -73,7 +74,8 @@ Run tests for the backend API:
 
 ```bash
 cd backend
-pytest
+source env/bin/activate
+pytest -v
 cd ..
 ```
 
