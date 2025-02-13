@@ -11,23 +11,23 @@ export const ThreatTable = () => {
   const [limit, setLimit] = useState(10)
   const [length, setLength] = useState(0)
 
+  // Get threats data from API service
   const getThreats = async () => {
     setLoading(true)
     try {
       const res = await axios.get(
         `http://localhost:5000/api/threats?page=${page}&limit=${limit}`
-      ) // TODO: get API route another way
+      )
       setThreats(res.data['threats'])
       setLength(res.data['length'])
     } catch (err) {
       setThreats([])
       setLength(0)
-      console.error(err)
     }
     setLoading(false)
   }
 
-  // Get threats data from API service
+  // Get threats data when there is a change to the pagination model
   useEffect(() => {
     getThreats()
   }, [page, limit])
@@ -53,7 +53,7 @@ export const ThreatTable = () => {
         width: 175,
         type: 'datetime',
         valueGetter: (date) => date && new Date(date),
-        valueFormatter: (value) => value?.toLocaleString(), // TODO: fix issue with date filtering
+        valueFormatter: (value) => value?.toLocaleString(),
       },
     ],
     [threatTypes]
@@ -62,6 +62,7 @@ export const ThreatTable = () => {
   return (
     <Paper>
       <DataGrid
+        aria-label="Threats table data"
         rows={threats?.map((threat, i) => ({ ...threat, id: i }))}
         columns={columns}
         initialState={{
