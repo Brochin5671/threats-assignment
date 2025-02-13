@@ -1,10 +1,6 @@
 from src import get_threats
 from src.models import Threat
-# import sys
-# import os
 import pytest
-
-# sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 @pytest.fixture
@@ -12,7 +8,7 @@ def threats_mock():
     """Setup a test threats list."""
     threats = []
     for _ in range(20):
-        threat = Threat('evil', 'evil.com', 'bad', '1/1/2024 00:00 UTC')
+        threat = Threat('evil', 'evil.com', 'bad', '1/1/2024 00:00:00 UTC')
         threats.append(threat)
     return threats
 
@@ -23,7 +19,7 @@ def threats_data_mock():
     threats = []
     for _ in range(20):
         threat = {'host': 'evil', 'url': 'evil.com',
-                  'threat': 'bad', 'date_added': '1/1/2024 00:00 UTC'}
+                  'threat': 'bad', 'date_added': '1/1/2024 00:00:00 UTC'}
         threats.append(threat)
     return {'urls': threats}
 
