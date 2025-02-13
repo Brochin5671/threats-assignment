@@ -1,12 +1,19 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 from src import get_threats_data
 
 # Setup app
 app = Flask(__name__)
 app.json.sort_keys = False
-CORS(app, origins=['http://localhost:5173'])  # TODO: list origin differently
+CORS(app, origins=['http://localhost:8000'])
+limiter = Limiter(
+    get_remote_address,
+    app=app,
+    default_limits=["1/second"],
+    storage_uri="memory://",
+)
 
 
 @app.get('/api/threats')
@@ -29,4 +36,4 @@ def get_threats():
 
 # Runs the app if this file is ran
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(port=5000)
